@@ -1,24 +1,22 @@
-import com.google.api.client.http.HttpResponse;
+import com.mongodb.*;
 import net.sf.sahi.client.Browser;
-import net.sf.sahi.client.ElementStub;
 import net.sf.sahi.config.Configuration;
-import net.sf.sahi.request.HttpRequest;
-import net.sf.sahi.util.MongoLogger;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.UnknownHostException;
 
-import com.mongodb.*;
-
 public class SahiDriverDemo {
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws Exception {
         //String sahiBase = "C:\\Users\\Administrator\\sahi"; // where Sahi is installed or unzipped
         //String userDataDirectory = "C:\\Users\\Administrator\\sahi\\userdata"; //path to the userdata directory
 
@@ -43,8 +41,8 @@ public class SahiDriverDemo {
         String img = browser.image("captcha.jpg").getAttribute("src");
         System.out.println("image address is:" + img);
 
-        String code = parseCode("http://localhost:8001/ocr/parse", img);
-        browser.textbox("code").setValue(code);
+        //String code = parseCode("http://localhost:8001/ocr/parse", img);
+        //browser.textbox("code").setValue(code);
 
         browser.submit(0).click();
 
@@ -57,7 +55,7 @@ public class SahiDriverDemo {
 
     }
 
-    private void parseCode(String parseUrl, String imageUrl) throws Exception {
+    private static void parseCode(String parseUrl, String imageUrl) throws Exception {
         HttpClient htttpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(parseUrl);
 
@@ -65,7 +63,7 @@ public class SahiDriverDemo {
         httpPost.setEntity(reqEntity);
 
 
-        FileBody bin = new FileBody(new File(filePath));
+        FileBody bin = new FileBody(new File("temp"));
         reqEntity.addPart("Filedata", bin);
 
         System.out.println("executing: " + httpPost.getRequestLine());

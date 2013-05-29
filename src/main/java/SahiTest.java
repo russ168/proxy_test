@@ -1,11 +1,9 @@
-import java.io.IOException;
-import java.util.HashMap;
-import net.sf.sahi.test.TestRunner;
 /**
  * Launch a Sahi script or suite.
  *
  */
 public class SahiTest {
+    /*
     public static void main(String[] args) throws IOException, InterruptedException {
         final String suiteName = "C:\\Users\\Administrator\\sahiTest\\src\\main\\java\\test.sah";
         //final String suiteName = "test.sah";
@@ -21,4 +19,5 @@ public class SahiTest {
         String status = testRunner.execute();
         System.out.println(status);
     }
+    */
 }
